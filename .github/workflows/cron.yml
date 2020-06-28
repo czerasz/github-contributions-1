@@ -24,8 +24,11 @@ jobs:
     - run: |
         git config --global user.email "contact@czerasz.com"
         git config --global user.name "Michal Czeraszkiewicz"
-    - run: export repository_path=$(node lib/cli.js ./github-i-love-dev-ops-data.json)
-    - run: cd $repository_path
     - run: |
+        export repository_path=$(node lib/cli.js ./github-i-love-dev-ops-data.json)
+        echo $repository_path
+        cd $repository_path
+        pwd
+        git status
         git remote add origin git@github.com:czerasz/github-contributions.git
         git push -f origin master
