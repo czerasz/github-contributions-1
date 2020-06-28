@@ -1,6 +1,9 @@
 name: Push every day to update activity chart
 
 on:
+  push:
+    branches:
+    - cron
   schedule:
   # Everyday at midnight
   - cron:  '0 0 * * *'
