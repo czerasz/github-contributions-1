@@ -1,0 +1,28 @@
+name: Push every day to update activity chart
+
+on:
+  schedule:
+  # Everyday at midnight
+  - cron:  '0 0 * * *'
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: cron
+    - name: Use Node.js 11.1.0
+      uses: actions/setup-node@v1
+      with:
+        node-version: 11.1.0
+    - run: npm install
+    - run: |
+        git config --global user.email "contact@czerasz.com"
+        git config --global user.name "Michal Czeraszkiewicz"
+    - run: export repository_path=$(node lib/cli.js ./github-i-love-dev-ops-data.json)
+    - run: cd $repository_path
+    - run: |
+        git remote add origin git@github.com:czerasz/github-contributions.git
+        git push -f origin master
